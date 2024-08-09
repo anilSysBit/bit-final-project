@@ -46,7 +46,7 @@ const Navigation = ({props}) => {
         >
             <Link className='border border-white p-1 rounded-lg'>Support</Link>
             {!props.auth.user ? <p>Login / Signup</p>
-            :<p className='flex gap-1'><AccountCircleOutlinedIcon/>Anil Wagle</p>}
+            :<p className='flex gap-1'><AccountCircleOutlinedIcon/>{props.auth.user.name}</p>}
         </div>
 
 

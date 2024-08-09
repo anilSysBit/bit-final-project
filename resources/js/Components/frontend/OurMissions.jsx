@@ -30,7 +30,7 @@ export default function OurMissions() {
   ]
   return (
     <>
-    <p className="text-2xl mt-10 mb-5">Our Missions</p>
+    <p className="text-2xl mt-10 mb-5 text-center">Our Missions</p>
     <div className="slider-container">
     <Slider {...settings}>
         

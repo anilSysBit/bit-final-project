@@ -2,6 +2,7 @@ import Navigation from '@/Components/frontend/Navigation';
 import OurMissions from '@/Components/frontend/OurMissions';
 import TopSlider from '@/Components/frontend/TopSlider';
 import { Link, Head } from '@inertiajs/react';
+import HomeAnalysis from '../Components/frontend/HomeAnalysis';
 
 export default function Welcome(props) {
     return (
@@ -25,6 +26,8 @@ export default function Welcome(props) {
                         </div>
                     </marquee> */}
                     <OurMissions/>
+
+                    <HomeAnalysis/>
                 </div>
             </div>
         </>

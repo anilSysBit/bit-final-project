@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pcc-all{
+    place-content: center;
+    place-items: center;
+}
+
+.pcc{
+    place-content: center;
+}
+
+.pic{
+    place-items: center;
+}
+
+.bms_nav{
+    border: 1px solid black;
+    display: flex;
+    /* place-content: center; */
+    place-items: center;
+    column-gap: 20px;
+    
+}
+.bms_nav nav ul{
+    display: flex;
+    column-gap: 20px;
+
+}

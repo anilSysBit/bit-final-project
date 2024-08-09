@@ -81,7 +81,7 @@ const HomeAnalysis = () => {
     height: 400px;
     width:100%;
     overflow: hidden;
-    // background-image: linear-gradient(90deg,rgb(255,100,100),white,white,white);
+    background-image: linear-gradient(90deg,white,#e5e7eb,white);
     display: flex;
     place-content: center;
     background-color:white;

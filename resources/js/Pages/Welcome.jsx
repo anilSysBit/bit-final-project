@@ -3,6 +3,7 @@ import OurMissions from '@/Components/frontend/OurMissions';
 import TopSlider from '@/Components/frontend/TopSlider';
 import { Link, Head } from '@inertiajs/react';
 import HomeAnalysis from '../Components/frontend/HomeAnalysis';
+import Footer from '@/Components/frontend/Footer';
 
 export default function Welcome(props) {
     return (
@@ -10,7 +11,7 @@ export default function Welcome(props) {
             <Head title="Welcome" />
             <div className="">
                 <Navigation props={props}/>
-                <div className="body_container pt-3 pr-20 pl-20">
+                <div className="container mx-auto mt-5">
                     <TopSlider/>
 
                     <div className="donate_now_box flex place-content-center place-items-center gap-10  border p-10 bg-gray-200">
@@ -28,8 +29,13 @@ export default function Welcome(props) {
                     <OurMissions/>
 
                     <HomeAnalysis/>
+
+
                 </div>
             </div>
+
+                    <Footer/>
+                    <p className='text-center'>Copyright Reserve 2023. Nepal Life Blood</p>
         </>
     );
 }

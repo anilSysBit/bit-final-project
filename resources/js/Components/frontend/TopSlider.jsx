@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function TopSlider() {
   var settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -16,16 +16,15 @@ export default function TopSlider() {
 
   const fakeSliderData =[
     {
-        imgSrc:"https://img.freepik.com/free-vector/gradient-world-aids-day-landing-page-template_23-2149149552.jpg?t=st=1723203023~exp=1723206623~hmac=11323ce98fd89700a86d99096a90f2615db1de096b27c4efd0dc0f9dc0c66937&w=1380"
-    },
-    {
-        imgSrc:"https://img.freepik.com/free-psd/movie-time-template_23-2151322628.jpg?t=st=1723203170~exp=1723206770~hmac=03b43d3316e32125d1175709deb4455f2768e6c82a3e646dff3071b164a04412&w=1380"
-    },
+      imgSrc:"https://img.freepik.com/free-vector/business-banner-with-space-your-text_1017-19582.jpg?t=st=1723218413~exp=1723222013~hmac=6e4ae1db578455afda39487715c4663d74b239596ca148b05a075f0ae99c30ca&w=1380"
+  },
+
+
     {
         imgSrc:"https://img.freepik.com/free-vector/flat-horizontal-banner-template-world-blood-donor-day-awareness_23-2150380167.jpg?t=st=1723203207~exp=1723206807~hmac=ea34d31af50a4d8860deb4790e54a8464e0bb3777cef1c9694a80a0c421d1e74&w=1380"
     },
     {
-        imgSrc:"https://img.freepik.com/premium-photo/box-blood-themed-blood-drop-with-red-heart-front_1092575-59674.jpg?w=1480"
+        imgSrc:"https://img.freepik.com/free-vector/realistic-horizontal-banner-template-world-hemophilia-day-awareness_23-2151301264.jpg?t=st=1723218103~exp=1723221703~hmac=c86f48770319353f7218b0d6daa4958ae38aca412380946d1bfee0a2a3e9bff3&w=1380"
     }
   ]
   return (

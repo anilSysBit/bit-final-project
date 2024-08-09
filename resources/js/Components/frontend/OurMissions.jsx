@@ -37,10 +37,10 @@ export default function OurMissions() {
         {fakeSliderData.map((elem,index)=>{
             return(
             <div className="mission_part h-[50vh]  overflow-hidden rounded p-5">
-                <div className="box rounded-md h-full bg-white text-center border shadow-2xl">
+                <div className="box rounded-md h-full  bg-white text-center shadow-2xl">
                 <img src={elem?.imgSrc} alt="" className="object-cover rounded h-2/3 w-full border " />
-                    <p className="p-2 mt-2 text-slate-500 font-bold text-2xl">Header</p>
-                    <p className="p-2 mt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia rerum architecto dolores unde aperiam!</p>
+                    <p className=" mt-1 text-slate-500 font-bold text-2xl">Donate on Time</p>
+                    <p className="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia rerum architecto dolores unde aperiam!</p>
                 </div>
               </div>
             )

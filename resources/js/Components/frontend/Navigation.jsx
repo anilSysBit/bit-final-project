@@ -6,7 +6,7 @@ import Dropdown from '@/Components/Dropdown';
 
 const Navigation = ({props}) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  console.log('props',props)
   return (
     <nav className="bg-[#bc0202]">
       <div className="container mx-auto flex items-center justify-between">
@@ -74,6 +74,7 @@ const Navigation = ({props}) => {
 
                     <Dropdown.Content>
                         <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                        {props.auth.user.is_admin ? <Dropdown.Link href={route('dashboard')}>Dashboard</Dropdown.Link>:''}
                         <Dropdown.Link href={route('logout')} method="post" as="button">
                             Log Out
                         </Dropdown.Link>

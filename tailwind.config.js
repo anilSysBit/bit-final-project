@@ -12,7 +12,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Poppins','sans-serif'],
             },
             colors: {
                 'blood-red': '#D32F2F',     /* A strong red to symbolize blood and urgency */
@@ -23,6 +23,7 @@ module.exports = {
                 'care-green': '#388E3C',    /* A green to symbolize health and care */
                 'white': '#FFFFFF',         /* For clean, readable text */
                 'light-gray': '#F5F5F5',    /* For backgrounds and softer elements */
+                'logo-blue':'#034456',
               },
         },
     },

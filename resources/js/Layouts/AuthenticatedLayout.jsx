@@ -4,26 +4,25 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import BmsSidebar from '@/Components/backend/Sidebar';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav className="bg-heart-red border-b border-gray-100 sticky top-0">
+                <div className=" mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
-                        <div className="flex">
+                        <div className="flex place-content-center place-items-center">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
+                            <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                <p className='text-lg text-white'>Admin Panel</p>
                             </div>
                         </div>
 
@@ -115,13 +114,10 @@ export default function Authenticated({ auth, header, children }) {
                 </div>
             </nav>
 
-            {/* {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )} */}
-
-            <main>{children}</main>
+            <div className="sidebar_layout flex gap-2">
+                <div className='sticky top-20 left-0 bottom-0 h-[90vh]'><BmsSidebar/></div>
+                 <main className=' w-full p-5'>{children}</main>
+            </div>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Sidebar,SubMenu,MenuItem,Menu,menuClasses } from 'react-pro-sidebar'
 import { Link } from '@inertiajs/react'
 
+
 const themes = {
   light: {
     sidebar: {
@@ -45,7 +46,7 @@ const sideBarData =[
   {
     name:'Dashboard',
     subChildren:null,
-    link:'dashboard',
+    link:'',
     icon:<Dashboard/>
   },
 
@@ -72,7 +73,7 @@ const sideBarData =[
       {
         name:'View List',
         subChildren:null,
-        link:'',
+        link:'blood.list',
       },
       {
         name:'Create a Request',
@@ -165,13 +166,13 @@ const BmsSidebar = () => {
             return(
               <SubMenu label={elem?.name} icon={elem?.icon}>
                 {elem?.subChildren?.map((item,index)=>(
-                  <MenuItem component={<Link href={item?.link}/>}>{item?.name}</MenuItem>
+                  <MenuItem component={item.link ? <Link href={route(item.link)}/> : <Link href={'/dashboard'}/>}>{item?.name}</MenuItem>
                 ))}
             </SubMenu>
             )
           }else{
             return(
-              <MenuItem component={<Link href={elem?.link} />} icon={elem?.icon}>{elem?.name}</MenuItem>
+              <MenuItem component={<Link href={route('dashboard')} />} icon={elem?.icon}>{elem?.name}</MenuItem>
             )
           }
         })}

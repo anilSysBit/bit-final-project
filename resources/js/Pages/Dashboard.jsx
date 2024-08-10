@@ -1,8 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { asset } from "@/helpers/asset";
-import BmsSidebar from "@/Components/backend/Sidebar";
-import BmsTables from "@/Components/backend/tables/BmsTables";
 import { Pending } from "@mui/icons-material";
 
 const imgSrc = [

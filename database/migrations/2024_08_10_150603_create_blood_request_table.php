@@ -21,10 +21,12 @@ return new class extends Migration
             $table->string('requestor_name')->nullable();
             $table->string('requestor_phone')->nullable();
             $table->string('address');
+            $table->integer('quantity');
             $table->string('hospital_name');
             $table->text('other')->nullable();
             $table->string('hospital_referral')->nullable();
             $table->enum('status', ['pending', 'completed', 'cancelled','onprocess'])->default('pending');
+            $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
             $table->timestamps();
         });
     }

@@ -28,6 +28,22 @@
     @apply px-6 py-4 whitespace-nowrap text-sm;
   }
 
+.status{
+  @apply border p-1 rounded-md text-xs
+}
+
+.status.pending{
+  @apply border border-blue-500 text-blue-500
+}
+.status.completed{
+  @apply border border-green-500 text-green-500
+}
+.status.cancelled{
+  @apply border border-red-500 text-red-500
+}
+.status.onprocess{
+  @apply bg-orange-200
+}
 
 .pcc-all{
     place-content: center;

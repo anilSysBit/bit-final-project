@@ -2,7 +2,7 @@ import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { MainBmsTable, Tbody, Thead } from '@/Components/backend/tables/BmsTables'
 import { Delete, RemoveRedEye } from '@mui/icons-material'
-import { Link, router } from '@inertiajs/react'
+import { Head, Link, router } from '@inertiajs/react'
 import { Pagination } from '@mui/material'
 
 
@@ -17,6 +17,7 @@ const List = (props) => {
     }
   return (
     <AuthenticatedLayout auth={props.auth}>
+        <Head title='Blood Requests'/>
         <p className='text-lg mb-5'>Blood Request List</p>
         <MainBmsTable className="mt-5">
             <Thead>

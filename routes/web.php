@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BloodRequestController;
+use App\Models\BloodRequest;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,10 +30,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard',[
         'dashboardData'=>[
-            'pending' => 10,
-            'completed' => 25,
-            'cancelled' => 5,
-            'onprocess' => 12,
+            'pending' => BloodRequest::where('status','pending')->count(),
+            'completed' => BloodRequest::where('status','completed')->count(),
+            'cancelled' => BloodRequest::where('status','cancelled')->count(),
+            'onprocess' => BloodRequest::where('status','onprocess')->count(),
         ]
     ]);
 })->middleware(['auth','auth.admin','verified'])->name('dashboard');

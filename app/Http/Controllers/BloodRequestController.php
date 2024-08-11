@@ -69,16 +69,15 @@ class BloodRequestController extends Controller
                 $now = date('YmdHis');
                 $username = explode(' ',Auth::user()->name)[0];
                 $filename = $now . strtolower($username). ".".$fileExtension;
-
-                $file->move('uploads/referrals',$filename);
-
+                $path = $file->move('uploads/referrals',$filename);
+                $validated['hospital_referral'] = $path;
                 
             }
             $validated['user_id'] = Auth::id();
 
 
 
-            // BloodRequest::create($validated);
+            BloodRequest::create($validated);
             return redirect()->route('blood.create')->with('success', 'Blood request created successfully.');
     }
 

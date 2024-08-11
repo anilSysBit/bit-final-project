@@ -100,7 +100,7 @@ const HomeAnalysis = () => {
             place-items: center;
             flex-direction: column;
             .data{
-                font-size: 70px;
+                font-size: 50px;
                 font-weight:bold;
                 color:black;
                 background: linear-gradient(to right,red,rgb(135, 12, 149));
@@ -109,7 +109,7 @@ const HomeAnalysis = () => {
                 
             }
             .title{
-                font-size: 30px;
+                font-size: 20px;
                 // color:white;
                 color:black;
             }
@@ -118,7 +118,7 @@ const HomeAnalysis = () => {
             display: flex;
             width: 400px;
             .tabulation_header{
-                font-size: 50px;
+                font-size: 40px;
                 place-self: center;
                 color:black;
             }

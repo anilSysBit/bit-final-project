@@ -114,9 +114,9 @@ export default function Authenticated({ auth, header, children }) {
                 </div>
             </nav>
 
-            <div className="sidebar_layout flex gap-2">
-                <div className='sticky w-[15%]  top-20 bottom-0 h-[90vh]'><BmsSidebar/></div>
-                 <main className='w-[85%] p-5'>{children}</main>
+            <div className="sidebar_layout flex gap-3">
+                <div className='sticky top-20 bottom-0 h-[90vh]'><BmsSidebar/></div>
+                 <main className='p-5 w-[80%]'>{children}</main>
             </div>
         </div>
     );

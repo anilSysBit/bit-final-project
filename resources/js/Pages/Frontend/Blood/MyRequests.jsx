@@ -1,4 +1,5 @@
 import Navigation from "@/Components/frontend/Navigation";
+import { Link } from "@inertiajs/react";
 import { RemoveRedEye,Edit } from "@mui/icons-material";
 import React from "react";
 
@@ -67,7 +68,7 @@ const MyRequests = (props) => {
                                 
                             <p className="text-xs text-slate-500">Initiated Date : {new Date(elem?.created_at).toUTCString()} </p>
                             <div className="flex gap-1">
-                                {elem?.status == 'pending' && <button className="border  p-1 rounded-lg bg-gray-300 h-8 w-8 flex place-content-center place-items-center text-white"><Edit color="success" fontSize="100"/></button>}
+                                {elem?.status == 'pending' && <Link href={route('blood.edit',elem?.id)} className="border  p-1 rounded-lg bg-gray-300 h-8 w-8 flex place-content-center place-items-center text-white"><Edit color="success" fontSize="100"/></Link>}
                                 {elem?.status == 'pending' && <button className="border  p-1 rounded-lg bg-red-300 h-8 w-20 text-xs flex place-content-center place-items-center text-gray-800">Cancel</button>}
                             </div>
                             </div>

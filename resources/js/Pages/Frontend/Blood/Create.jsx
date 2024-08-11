@@ -3,25 +3,29 @@ import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
+import { asset } from '@/helpers/asset'
 import { useForm } from '@inertiajs/react'
 import React from 'react'
 
 const Create = (props) => {
     console.log('Create props',props)
+    const prevData = props.prevData || null;
 
     const {data,setData,post,processing,errors} = useForm({
-        patient_name:'',
-        phone:"",
-        quantity:"",
-        hospital_name:"",
-        address:"",
-        gender:"",
-        blood_group:"",
-        other:"",
-        required_date:"",
-        required_time:"",
+        patient_name:prevData?.patient_name,
+        phone:prevData?.phone,
+        quantity:prevData?.quantity,
+        hospital_name:prevData?.hospital_name,
+        address:prevData?.address,
+        gender:prevData?.gender,
+        blood_group:prevData?.blood_group,
+        other:prevData?.other,
+        required_date:prevData?.required_date,
+        required_time:prevData?.required_time,
         hospital_referral:null,
     })
+
+
 
     const submit = (e)=>{
         e.preventDefault();
@@ -113,7 +117,7 @@ const Create = (props) => {
                         <InputLabel className='sr_only' value="Gender"/>
                         <select className='mt-1 block w-full rounded-md border-slate-300' name="gender" onChange={handleChange} value={data?.gender}>
                             <option disabled value="">Select Gender</option>
-                        {props.genderOptions.map((elem,index)=>{
+                        {props.constants.genderOptions.map((elem,index)=>{
                                 return(
                                     <option value={elem} className='capitalize'>{elem}</option>
                                 )
@@ -128,7 +132,7 @@ const Create = (props) => {
                             onChange={handleChange}
                             value={data?.blood_group}>
                                 <option disabled value="">Choose Blood Group</option>
-                            {props.bloodOptions.map((elem,index)=>(
+                            {props.constants.bloodOptions.map((elem,index)=>(
                                 <option value={elem}>{elem}</option>
                             ))}
                         </select>
@@ -159,7 +163,7 @@ const Create = (props) => {
                         />
                         <select className='rounded border border-slate-300' name='required_time' onChange={handleChange} value={data?.required_time}>
                             <option value="" disabled>Select time</option>
-                            {props.timeOptions && props.timeOptions.map((elem,index)=>(
+                            {props.constants.timeOptions && props.constants.timeOptions.map((elem,index)=>(
                                 <option value={elem}>{elem}</option>
                             ))}
 
@@ -178,7 +182,8 @@ const Create = (props) => {
 
                         />
                         <button type='button' className='bg-orange-200 p-1 rounded-lg text-xs mt-1 min-w-[200px] min-h-10'>Choose Image</button>
-                        {data.hospital_referral && <img src={URL.createObjectURL(data.hospital_referral)} alt=""  className='h-20 mt-2 shadow-lg'/>}
+                        {(data.hospital_referral) && <img src={URL.createObjectURL(data.hospital_referral)} alt=""  className='h-20 mt-2 shadow-lg'/>}
+                        {(prevData.hospital_referral && !data.hospital_referral) && <img src={`/${prevData.hospital_referral}`} alt=""  className='h-20 mt-2 shadow-lg'/>}
                         <InputError className="mt-2" message={errors?.hospital_referral}/>
                     </div>
 

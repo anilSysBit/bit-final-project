@@ -12,6 +12,12 @@ use Inertia\Inertia;
 
 class BloodRequestController extends Controller
 {
+    public $constants = array(
+        'genderOptions' => ['male','female','others'],
+        'bloodOptions'=>['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+        'timeOptions'=>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,],
+    );
+
     /**
      * Display a listing of the resource.
      *
@@ -33,10 +39,9 @@ class BloodRequestController extends Controller
      */
     public function create()
     {
+
         return Inertia::render('Frontend/Blood/Create',[
-            'genderOptions' => ['male','female','others'],
-            'bloodOptions'=>['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-            'timeOptions'=>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,00],
+            'constants'=> $this->constants
         ]);
     }
 
@@ -59,7 +64,7 @@ class BloodRequestController extends Controller
                 'blood_group'=>'required|string|max:10',
                 'other'=> 'nullable|string|max:1000',
                 'required_date'=>'required|date',
-                'required_time'=>'required|string',
+                'required_time'=>'required|time',
                 'hospital_referral'=>'nullable|file|mimes:jpeg,png,jpg|max:2048'
             ]);
 
@@ -102,7 +107,11 @@ class BloodRequestController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        return Inertia::render('Frontend/Blood/Create',[
+            'constants'=> $this->constants,
+            'prevData'=>BloodRequest::findOrFail($id),
+        ]);
     }
 
     /**
@@ -114,7 +123,42 @@ class BloodRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'patient_name' => 'required|string|max:255',
+            'phone'=> 'required|string',
+            'address'=> 'required|string|max:255',
+            'hospital_name'=> 'required|string|max:255',
+            'quantity'=> 'required|min:1|max:5|numeric',
+            'gender'=>'required|string|max:100',
+            'blood_group'=>'required|string|max:10',
+            'other'=> 'nullable|string|max:1000',
+            'required_date'=>'required|date',
+            'required_time'=>'required|time',
+            'hospital_referral'=>'sometimes|file|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        $bloodRequest = BloodRequest::findOrFail($id);
+
+        if($request->hasFile('hospital_referral')){
+            if ($bloodRequest->hospital_referral && file_exists(public_path($bloodRequest->hospital_referral))) {
+                unlink(public_path($bloodRequest->hospital_referral));
+            }
+
+            
+            $file = $request->file('hospital_referral');
+            $fileExtension = $file->getClientOriginalExtension();
+            $now = date('YmdHis');
+            $username = explode(' ',Auth::user()->name)[0];
+            $filename = $now . strtolower($username). ".".$fileExtension;
+            $path = $file->move('uploads/referrals',$filename);
+            $validated['hospital_referral'] = $path;
+        }
+
+
+
+
+        $bloodRequest->update($validated);
+
+        return redirect()->route('myrequests')->with('success', 'Updated Successfully.');
     }
 
     /**

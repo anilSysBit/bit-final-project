@@ -6,7 +6,6 @@ import Dropdown from '@/Components/Dropdown';
 
 const Navigation = ({props}) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log('props',props)
   return (
     <nav className="bg-[#bc0202]">
       <div className="container mx-auto flex items-center justify-between">
@@ -43,7 +42,8 @@ const Navigation = ({props}) => {
             isOpen ? 'block' : 'hidden'
           }`}
         >
-            <Link className='border border-white p-1 rounded-lg'>Support</Link>
+            <Link href={route('blood.create')} className='p-1 rounded-lg hover:underline'>Create a request</Link>
+            <Link className='p-1 rounded-lg hover:underline'>Support</Link>
             {!props.auth.user ? <Link href={route('login')}>Login / Signup</Link>
             :                        <div className="hidden sm:flex sm:items-center sm:ml-6">
             <div className="ml-3 relative">
@@ -74,6 +74,7 @@ const Navigation = ({props}) => {
 
                     <Dropdown.Content>
                         <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                        <Dropdown.Link href={route('myrequests')}>My Requests</Dropdown.Link>
                         {props.auth.user.is_admin ? <Dropdown.Link href={route('dashboard')}>Dashboard</Dropdown.Link>:''}
                         <Dropdown.Link href={route('logout')} method="post" as="button">
                             Log Out

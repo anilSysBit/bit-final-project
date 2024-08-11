@@ -5,6 +5,7 @@ use App\Http\Controllers\BloodRequestController;
 use App\Models\BloodRequest;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 /*
@@ -49,5 +50,11 @@ Route::middleware('auth')->prefix('blood')->group(function(){
     Route::get('create',[BloodRequestController::class,'create'])->name('blood.create');
     Route::post('store',[BloodRequestController::class,'store'])->name('blood.store');
 });
+
+Route::get('my-requests',function(){
+    return Inertia::render('Frontend/Blood/MyRequests',[
+        'requestData'=>Auth::user()->bloodRequests,
+    ]);
+})->name('myrequests');
 
 require __DIR__.'/auth.php';

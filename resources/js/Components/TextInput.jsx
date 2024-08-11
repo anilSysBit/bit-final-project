@@ -10,7 +10,7 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
     }, []);
 
     return (
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start w-full">
             <input
                 {...props}
                 type={type}

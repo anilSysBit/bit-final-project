@@ -36,6 +36,7 @@ class BloodRequestController extends Controller
         return Inertia::render('Frontend/Blood/Create',[
             'genderOptions' => ['male','female','others'],
             'bloodOptions'=>['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+            'timeOptions'=>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,00],
         ]);
     }
 
@@ -58,6 +59,7 @@ class BloodRequestController extends Controller
                 'blood_group'=>'required|string|max:10',
                 'other'=> 'nullable|string|max:1000',
                 'required_date'=>'required|date',
+                'required_time'=>'required|string',
                 'hospital_referral'=>'nullable|file|mimes:jpeg,png,jpg|max:2048'
             ]);
 

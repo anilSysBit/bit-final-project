@@ -26,6 +26,7 @@ class BloodRequest extends Model
         'hospital_referral',
         'status',
         'required_date',
+        'required_time',
     ];
 
     public function user(){

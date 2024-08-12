@@ -50,6 +50,7 @@ Route::middleware('auth')->prefix('blood')->group(function(){
     Route::get('create',[BloodRequestController::class,'create'])->name('blood.create');
     Route::post('store',[BloodRequestController::class,'store'])->name('blood.store');
     Route::get('edit/{id}',[BloodRequestController::class,'edit'])->name('blood.edit');
+    Route::patch('edit/{id}',[BloodRequestController::class,'update'])->name('blood.update');
 });
 
 Route::get('my-requests',function(){

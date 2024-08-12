@@ -9,25 +9,25 @@ import React from 'react'
 
 const Create = (props) => {
     console.log('Create props',props)
-    const prevData = props.prevData || null;
+    const prevData = props.prevData;
 
-    const {data,setData,post,processing,errors} = useForm({
-        patient_name:prevData?.patient_name,
-        phone:prevData?.phone,
-        quantity:prevData?.quantity,
-        hospital_name:prevData?.hospital_name,
-        address:prevData?.address,
-        gender:prevData?.gender,
-        blood_group:prevData?.blood_group,
-        other:prevData?.other,
-        required_date:prevData?.required_date,
-        required_time:prevData?.required_time,
+    const {data,setData,post,put,patch,processing,errors} = useForm({
+        patient_name:prevData?.patient_name || "",
+        phone:prevData?.phone || "",
+        quantity:prevData?.quantity || "",
+        hospital_name:prevData?.hospital_name || "",
+        address:prevData?.address || "",
+        gender:prevData?.gender || "",
+        blood_group:prevData?.blood_group || "",
+        other:prevData?.other || "",
+        required_date:prevData?.required_date || "",
+        required_time:prevData?.required_time || "",
         hospital_referral:null,
     })
 
 
 
-    const submit = (e)=>{
+    const submit = async(e)=>{
         e.preventDefault();
 
         const formData = new FormData();
@@ -35,11 +35,19 @@ const Create = (props) => {
             formData.append(key, value);
         }
 
-        post('/blood/store', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        if(props.method=='POST'){
+            post('/blood/store', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        }else{
+            patch(`/blood/edit/${prevData.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        }
     }
 
     const handleChange =(e)=>{
@@ -115,7 +123,7 @@ const Create = (props) => {
 
                     <div className='w-[49%]'>
                         <InputLabel className='sr_only' value="Gender"/>
-                        <select className='mt-1 block w-full rounded-md border-slate-300' name="gender" onChange={handleChange} value={data?.gender}>
+                        <select className='mt-1 block w-full rounded-md border-slate-300' name="gender" onChange={handleChange} value={data.gender}>
                             <option disabled value="">Select Gender</option>
                         {props.constants.genderOptions.map((elem,index)=>{
                                 return(
@@ -183,7 +191,7 @@ const Create = (props) => {
                         />
                         <button type='button' className='bg-orange-200 p-1 rounded-lg text-xs mt-1 min-w-[200px] min-h-10'>Choose Image</button>
                         {(data.hospital_referral) && <img src={URL.createObjectURL(data.hospital_referral)} alt=""  className='h-20 mt-2 shadow-lg'/>}
-                        {(prevData.hospital_referral && !data.hospital_referral) && <img src={`/${prevData.hospital_referral}`} alt=""  className='h-20 mt-2 shadow-lg'/>}
+                        {(prevData?.hospital_referral && !data.hospital_referral) && <img src={`/${prevData.hospital_referral}`} alt=""  className='h-20 mt-2 shadow-lg'/>}
                         <InputError className="mt-2" message={errors?.hospital_referral}/>
                     </div>
 

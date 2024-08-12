@@ -41,7 +41,8 @@ class BloodRequestController extends Controller
     {
 
         return Inertia::render('Frontend/Blood/Create',[
-            'constants'=> $this->constants
+            'constants'=> $this->constants,
+            'method'=>'POST'
         ]);
     }
 
@@ -64,7 +65,7 @@ class BloodRequestController extends Controller
                 'blood_group'=>'required|string|max:10',
                 'other'=> 'nullable|string|max:1000',
                 'required_date'=>'required|date',
-                'required_time'=>'required|time',
+                'required_time'=>'required|string',
                 'hospital_referral'=>'nullable|file|mimes:jpeg,png,jpg|max:2048'
             ]);
 
@@ -85,7 +86,7 @@ class BloodRequestController extends Controller
 
 
             BloodRequest::create($validated);
-            return redirect()->route('blood.create')->with('success', 'Blood request created successfully.');
+            return redirect()->route('myrequests')->with('success', 'Blood request created successfully.');
     }
 
     /**
@@ -123,42 +124,50 @@ class BloodRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'patient_name' => 'required|string|max:255',
-            'phone'=> 'required|string',
-            'address'=> 'required|string|max:255',
-            'hospital_name'=> 'required|string|max:255',
-            'quantity'=> 'required|min:1|max:5|numeric',
-            'gender'=>'required|string|max:100',
-            'blood_group'=>'required|string|max:10',
-            'other'=> 'nullable|string|max:1000',
-            'required_date'=>'required|date',
-            'required_time'=>'required|time',
-            'hospital_referral'=>'sometimes|file|mimes:jpeg,png,jpg|max:2048'
-        ]);
-        $bloodRequest = BloodRequest::findOrFail($id);
+            // dd($request->getContent());
+            $validated = $request->validate([
+                'user_id' => 'nullable',
+                'patient_name' => 'sometimes|string|max:255',
+                'phone'=> 'sometimes|string',
+                'address'=> 'sometimes|string|max:255',
+                'hospital_name'=> 'sometimes|string|max:255',
+                'quantity'=> 'sometimes|min:1|max:5|numeric',
+                'gender'=>'sometimes|string|max:100',
+                'blood_group'=>'sometimes|string|max:10',
+                'other'=> 'nullable|string|max:1000',
+                'required_date'=>'sometimes|date',
+                'required_time'=>'sometimes|string',
+                'hospital_referral'=>'nullable|file|mimes:jpeg,png,jpg|max:2048'
+            ]);
+    
+    
+            $bloodRequest = BloodRequest::findOrFail($id);
+    
+    
+            if($request->hasFile('hospital_referral')){
 
-        if($request->hasFile('hospital_referral')){
-            if ($bloodRequest->hospital_referral && file_exists(public_path($bloodRequest->hospital_referral))) {
-                unlink(public_path($bloodRequest->hospital_referral));
+                dd('hasfile');
+                $file = $request->file('hospital_referral');
+
+                dd($file);
+                $fileExtension = $file->getClientOriginalExtension();
+                $now = date('YmdHis');
+                $username = explode(' ',Auth::user()->name)[0];
+                $filename = $now . strtolower($username). ".".$fileExtension;
+                $path = $file->move('uploads/referrals',$filename);
+                $validated['hospital_referral'] = $path;
+            }else{
+                dd('doesnot have file');
+                
             }
+    
+    
+    
+    
+            $bloodRequest->update($validated);
+    
+            return redirect()->route('myrequests')->with('success', 'Updated Successfully.');
 
-            
-            $file = $request->file('hospital_referral');
-            $fileExtension = $file->getClientOriginalExtension();
-            $now = date('YmdHis');
-            $username = explode(' ',Auth::user()->name)[0];
-            $filename = $now . strtolower($username). ".".$fileExtension;
-            $path = $file->move('uploads/referrals',$filename);
-            $validated['hospital_referral'] = $path;
-        }
-
-
-
-
-        $bloodRequest->update($validated);
-
-        return redirect()->route('myrequests')->with('success', 'Updated Successfully.');
     }
 
     /**

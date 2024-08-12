@@ -21,6 +21,7 @@ class BloodRequest extends Model
         'address',
         'hospital_name',
         'blood_group',
+        'gender',
         'quantity',
         'other',
         'hospital_referral',

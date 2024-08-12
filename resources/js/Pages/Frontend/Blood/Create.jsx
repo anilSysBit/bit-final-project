@@ -36,17 +36,9 @@ const Create = (props) => {
         }
 
         if(props.method=='POST'){
-            post('/blood/store', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            post('/blood/store', formData);
         }else{
-            patch(`/blood/edit/${prevData.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            patch(`/blood/edit/${prevData.id}`, formData);
         }
     }
 
@@ -64,7 +56,7 @@ const Create = (props) => {
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <section className="p-4 mt-5 sm:p-8 bg-white shadow sm:rounded-lg" >
                 <p className='font-bold text-lg'>Create a Blood Request</p>
-                <form onSubmit={submit} className="mt-6  flex justify-between gap-5 flex-wrap">
+                <form onSubmit={submit} className="mt-6  flex justify-between gap-5 flex-wrap" encType='multipart/form-data'>
                     <div className='w-[49%]'>
                         <InputLabel value="Patient Name"/>
                         <TextInput 

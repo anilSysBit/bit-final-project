@@ -51,12 +51,9 @@ Route::middleware('auth')->prefix('blood')->group(function(){
     Route::post('store',[BloodRequestController::class,'store'])->name('blood.store');
     Route::get('edit/{id}',[BloodRequestController::class,'edit'])->name('blood.edit');
     Route::patch('edit/{id}',[BloodRequestController::class,'update'])->name('blood.update');
+    Route::patch('status/{id}',[BloodRequestController::class,'changeStatus'])->name('blood.status');
 });
 
-Route::get('my-requests',function(){
-    return Inertia::render('Frontend/Blood/MyRequests',[
-        'requestData'=>Auth::user()->bloodRequests,
-    ]);
-})->name('myrequests');
+Route::get('/my-requests',[BloodRequestController::class,'user'])->name('myrequests');
 
 require __DIR__.'/auth.php';

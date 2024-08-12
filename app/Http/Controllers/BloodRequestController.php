@@ -32,6 +32,25 @@ class BloodRequestController extends Controller
         ]);
     }
 
+
+    public function user(Request $request){
+        $status = $request->query('status');
+        $requestData = Auth::user()->bloodRequests;
+
+
+        if($status){
+            $data = $requestData->where('status', $status)->values()->toArray();
+            return Inertia::render('Frontend/Blood/MyRequests',[
+                'requestData'=>$data,
+            ]);
+        }else{
+            return Inertia::render('Frontend/Blood/MyRequests',[
+                'requestData'=>$requestData,
+            ]);
+        }
+
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -54,6 +73,7 @@ class BloodRequestController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
             $validated = $request->validate([
                 'user_id'=>'nullable',
                 'patient_name' => 'required|string|max:255',
@@ -124,7 +144,7 @@ class BloodRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-            // dd($request->getContent());
+
             $validated = $request->validate([
                 'user_id' => 'nullable',
                 'patient_name' => 'sometimes|string|max:255',
@@ -140,16 +160,15 @@ class BloodRequestController extends Controller
                 'hospital_referral'=>'nullable|file|mimes:jpeg,png,jpg|max:2048'
             ]);
     
+
     
+            
             $bloodRequest = BloodRequest::findOrFail($id);
-    
-    
+            
             if($request->hasFile('hospital_referral')){
-
-                dd('hasfile');
+                
                 $file = $request->file('hospital_referral');
-
-                dd($file);
+                
                 $fileExtension = $file->getClientOriginalExtension();
                 $now = date('YmdHis');
                 $username = explode(' ',Auth::user()->name)[0];
@@ -157,7 +176,7 @@ class BloodRequestController extends Controller
                 $path = $file->move('uploads/referrals',$filename);
                 $validated['hospital_referral'] = $path;
             }else{
-                dd('doesnot have file');
+                $validated['hospital_referral'] = $bloodRequest->hospital_referral;
                 
             }
     
@@ -168,6 +187,25 @@ class BloodRequestController extends Controller
     
             return redirect()->route('myrequests')->with('success', 'Updated Successfully.');
 
+    }
+
+
+    public function changeStatus(Request $request,$id){
+        $validated = $request->validate([
+            "status"=> 'required|string',
+        ]);
+
+        $bloodRequest = BloodRequest::findOrFail($id);
+
+        $bloodRequest->update($validated);
+        $user = Auth::id();
+
+        
+        if($user == $bloodRequest->user_id){
+            return redirect()->route('myrequests')->with('success', 'Cancelled the Request');
+
+        }
+        return redirect()->route('myrequests')->with('success', 'Status Changed Successfully.');
     }
 
     /**

@@ -23,12 +23,32 @@ class BloodRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $bloodRequests = BloodRequest::paginate(10);
+        $query = $request->query('search');
+        $status = $request->query('status');
+
+        $bloodRequest = BloodRequest::query();
+
+
+        if($query){
+            $bloodRequest->where('patient_name','like',"%{$query}%");
+        }
+        if($status && $status != 'all'){
+            $bloodRequest->where('status',$status);
+
+
+        }
+
+        $bloodRequest = $bloodRequest->paginate(10);
+
         return Inertia::render('Frontend/Blood/List',[
-            'blood_requests' => $bloodRequests,
+            'blood_requests' => $bloodRequest,
+            'params'=>[
+                'search'=>$query,
+                'select'=>$status
+            ]
         ]);
     }
 
@@ -217,5 +237,7 @@ class BloodRequestController extends Controller
     public function destroy($id)
     {
         //
+        BloodRequest::destroy($id);
+        return redirect()->route('blood.list')->with('success', 'Deleted Successfully.');
     }
 }

@@ -52,6 +52,7 @@ Route::middleware('auth')->prefix('blood')->group(function(){
     Route::get('edit/{id}',[BloodRequestController::class,'edit'])->name('blood.edit');
     Route::patch('edit/{id}',[BloodRequestController::class,'update'])->name('blood.update');
     Route::patch('status/{id}',[BloodRequestController::class,'changeStatus'])->name('blood.status');
+    Route::delete('list/{id}',[BloodRequestController::class,'destroy'])->name('blood.delete')->middleware("auth.admin");
 });
 
 Route::get('/my-requests',[BloodRequestController::class,'user'])->name('myrequests');

@@ -1,24 +1,86 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { MainBmsTable, Tbody, Thead } from '@/Components/backend/tables/BmsTables'
+import { FilterBox, MainBmsTable, SearchBox, SelectBox, Tbody, Thead } from '@/Components/backend/tables/BmsTables'
 import { Delete, RemoveRedEye } from '@mui/icons-material'
-import { Head, Link, router } from '@inertiajs/react'
+import { Head, Link, router, useForm } from '@inertiajs/react'
 import { Pagination } from '@mui/material'
+import ConfirmBox from '@/Components/designs/ConfirmBox'
 
 
 
 const List = (props) => {
+    const [confirmDeleteRequest,setConfirmDeleteRequest] = useState(false);
+    const [deleteId,setDeleteId] = useState(false);
+    
+
+    const [searchTerm,setSearchTerm] = useState('');
+    const [status,setStatus] = useState('');
     const bloodRequests = props.blood_requests.data;
     const pagination  = props.blood_requests;
 
+    const searchParam = props.params.search;
+
 
     const handlePaginationChange =(e,page)=>{
-        router.visit(`/blood/list?page=${page}`)
+        const obj ={};
+        if(page){
+            obj['page'] = page;
+        }
+        if(searchParam){
+            obj['search'] = searchParam;
+        }
+        if(status){
+            obj['status'] = status;
+        }
+        router.get(`/blood/list`,obj,{
+            preserveState:true
+        })
+    }
+
+    const handleConfirmRequestDeletion =(id)=>{
+        setDeleteId(id);
+        setConfirmDeleteRequest(true);
+    }
+
+    const deleteRequest =()=>{
+        router.delete(`/blood/list/${deleteId}`,{
+            onSuccess:()=>{
+                console.log('Good to go')
+            },
+            onError:(error)=>{
+                console.log("Error occured",error)
+            }
+        });
+    }
+
+    const handleSubmitSearch =(e)=>{
+        e.preventDefault();
+        const obj = {};
+        if(searchTerm){
+            obj['search'] = searchTerm
+        }
+        if(status){
+            obj['status'] = status
+        }
+        router.get('/blood/list',obj,{
+            preserveState:true
+        });
     }
   return (
     <AuthenticatedLayout auth={props.auth}>
         <Head title='Blood Requests'/>
+        <ConfirmBox 
+            confirmingUserDeletion={confirmDeleteRequest} 
+            setPropStat={setConfirmDeleteRequest} 
+            title='Are you sure you want to delete the Request' 
+            note='Only delete the item if you feel like it is wanted or spam you make harm the requester life.' 
+            submitFunc={deleteRequest}
+        />
         <p className='text-lg mb-5'>Blood Request List</p>
+        <FilterBox onSubmit={handleSubmitSearch}>
+            <SelectBox options={['all','pending','onprocess','completed','cancelled']} setValue={setStatus} value={status || searchParam}/>
+            <SearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>
+        </FilterBox>
         <MainBmsTable className="mt-5">
             <Thead>
                 <th>SN</th>
@@ -45,10 +107,10 @@ const List = (props) => {
                             <dev className={`status ${request?.status}`}>{request.status}</dev>
                         </td>
                         <td className="text-gray-500">{request.hospital_name}</td>
-                        <td className="text-gray-500">{request.quantity}</td>
+                        <td className="text-gray-500" >{request.quantity}</td>
                         <td>
                             <Link><RemoveRedEye fontSize='100' className='text-gray-500 hover:text-nepal-blue'/></Link>
-                            <Link><Delete fontSize='100' className='text-red-500 ml-5'/></Link>
+                            <button onClick={()=>handleConfirmRequestDeletion(request.id)}><Delete fontSize='100' className='text-red-500 ml-5'/></button>
                         </td>
                       </tr>
                     )

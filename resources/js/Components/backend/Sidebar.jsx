@@ -63,6 +63,10 @@ const sideBarData =[
         name:'staff',
         subChildren:null,
         link:'',
+      },
+      {
+        name:"User Mgmt",
+        link:"/user-mgmt"
       }
     ],
   },
@@ -73,7 +77,7 @@ const sideBarData =[
       {
         name:'View List',
         subChildren:null,
-        link:'blood.list',
+        link:'/blood/list',
       },
       {
         name:'Create a Request',
@@ -90,7 +94,7 @@ const sideBarData =[
       {
         name:'View List',
         subChildren:null,
-        link:'',
+        link:'/users',
       },
       {
         name:'Create a User',
@@ -166,13 +170,13 @@ const BmsSidebar = () => {
             return(
               <SubMenu label={elem?.name} icon={elem?.icon}>
                 {elem?.subChildren?.map((item,index)=>(
-                  <MenuItem component={item.link ? <Link href={route(item.link)}/> : <Link href={'/dashboard'}/>}>{item?.name}</MenuItem>
+                  <MenuItem component={item.link ? <Link href={item.link}/> : <Link href={'/users'}/>}>{item?.name}</MenuItem>
                 ))}
             </SubMenu>
             )
           }else{
             return(
-              <MenuItem component={<Link href={route('dashboard')} />} icon={elem?.icon}>{elem?.name}</MenuItem>
+              <MenuItem component={<Link href={elem?.link} />} icon={elem?.icon}>{elem?.name}</MenuItem>
             )
           }
         })}

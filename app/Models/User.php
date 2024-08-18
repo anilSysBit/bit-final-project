@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function bloodRequests(){
         return $this->hasMany(BloodRequest::class);
     }
+
+    public function user_roles(){
+        return $this->hasMany(UserRole::class);
+    }
 }

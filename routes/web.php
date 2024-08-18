@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BloodRequestController;
-use App\Models\BloodRequest;
+use App\Http\Controllers\UserRoleController;
+use App\Models\{BloodRequest,User};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 use Inertia\Inertia;
 
 /*
@@ -55,6 +57,29 @@ Route::middleware('auth')->prefix('blood')->group(function(){
     Route::delete('list/{id}',[BloodRequestController::class,'destroy'])->name('blood.delete')->middleware("auth.admin");
 });
 
+Route::get('/users',function(){
+
+
+    return Inertia::render('Frontend/User/List',[
+        'userData'=>User::paginate(10),
+    ]);
+})->name('users');
+
+Route::get('/users/{id}',function($id){
+    $user_data = User::findOrFail($id);
+    return Inertia::render('Frontend/User/Details',[
+        'userData'=> $user_data
+    ]);
+});
+
 Route::get('/my-requests',[BloodRequestController::class,'user'])->name('myrequests');
+
+
+Route::get('/role', [UserRoleController::class,'index'])->name("role");
+Route::post('/role', [UserRoleController::class,'create'])->name("user.role");
+Route::get('/permission', [UserRoleController::class,'perm_index'])->name("permission");
+Route::post('/permission', [UserRoleController::class,'perm_create'])->name("user.permission");
+
+
 
 require __DIR__.'/auth.php';
